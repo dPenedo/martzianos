@@ -40,6 +40,14 @@ show_text = True
 
 
 
+fuente = pygame.font.Font('ka1.ttf', 36)
+def texto_aparece(x, y):
+    texto = fuente.render('Puntaje:', True, (237, 235, 220))
+    pantalla.blit(texto, (x, y))
+#if event.type == pygame.KEYDOWN:
+ #   click_to_start()
+#if event.type == font_fade:
+
 
 se_ejecuta = True
 gameStart = False
@@ -49,10 +57,11 @@ while se_ejecuta:
     if not gameStart:
         mostrar_inicio()
         pygame.display.flip()
+        #clock.tick(40)
         pantalla.blit(text_surf, text_surf.get_rect(center = pantalla.get_rect().center))
-        clock.tick(60)
     if gameStart == True:
         mostrar_puntaje(15,20)
+        pygame.time.set_timer(texto_aparece, 2000)
 
     for event in pygame.event.get():
         # Evento cerrar
@@ -63,7 +72,7 @@ while se_ejecuta:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 gameStart = True
-                
+                    
 
 
     pygame.display.update()

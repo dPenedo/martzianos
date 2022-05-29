@@ -28,7 +28,9 @@ img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
 player_y = 500
 player_x_change = 0
+player_y_change = 0
 # Puntaje
+
 score = 0
 
 #  Variables enemy
@@ -122,10 +124,15 @@ while game_runing:
                 player_x_change = -1
             if event.key == pygame.K_RIGHT:
                 player_x_change = 1
+            if event.key == pygame.K_UP:
+                player_y_change = -1
+            if event.key == pygame.K_DOWN:
+                player_y_change = 1
             if event.key == pygame.K_SPACE and bullet_visible == False and defeat == False:
                 sonido_bala = mixer.Sound('audio/disparo.mp3')
                 sonido_bala.play()
                 bullet_x = player_x
+                bullet_y = player_y
                 shooting_bullet(bullet_x, bullet_y)
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
@@ -138,14 +145,21 @@ while game_runing:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 player_x_change = 0
+            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                player_y_change = 0
 
     # Change players location
     player_x += player_x_change
+    player_y += player_y_change
     # Keep the player on the screen's borders
     if player_x <= 0:
         player_x = 0
     elif player_x >= 736:
         player_x = 736
+    if player_y <= 0:
+        player_y = 0
+    elif player_x >= 536:
+        player_x = 536
 
     # Changes enemies location
     for e in range(number_enemies):
