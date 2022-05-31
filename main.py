@@ -23,6 +23,7 @@ def music_on():
     mixer.music.play()
 
 
+score = 0
 #  Variables Jugador
 img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
@@ -31,7 +32,6 @@ player_x_change = 0
 player_y_change = 0
 # Puntaje
 
-score = 0
 
 #  Variables enemy
 img_enemy = []
@@ -48,7 +48,6 @@ for e in range(number_enemies):
     enemy_y.append(random.randint(50, 180))
     enemy_x_change.append(0.6)
     enemy_y_change.append(70)
-
 #  Variables of the bullet
 img_bala = pygame.image.load("img/bullet.png")
 bullet_x = 0
@@ -138,7 +137,7 @@ while game_runing:
                 pygame.quit()
             if event.key == pygame.K_m:
                 mixer.music.pause()
-            if event.key == pygame.K_s:
+            if event.key == pygame.K_p:
                 mixer.music.play()
 
         # Event of releasing keys
@@ -158,8 +157,8 @@ while game_runing:
         player_x = 736
     if player_y <= 0:
         player_y = 0
-    elif player_x >= 536:
-        player_x = 536
+    elif player_y >= 536:
+        player_y = 536
 
     # Changes enemies location
     for e in range(number_enemies):
