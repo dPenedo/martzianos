@@ -28,9 +28,7 @@ score = 0
 img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
 player_y = 500
-player_x_change = 0
-player_y_change = 0
-player_speed = 2
+player_speed = 3
 # Puntaje
 
 
@@ -123,62 +121,33 @@ while game_runing:
         # Event for quiting
         if event.type == pygame.QUIT:
             game_runing = False
-        # Event for pressing keys
-        keys=pygame.key.get_pressed()
-        if event.type == pygame.KEYDOWN:
-            if keys[pygame.K_LEFT]:
-                player_x_change -= player_speed
-            if keys[pygame.K_RIGHT]:
-                player_x_change += player_speed
-            if keys[pygame.K_UP]:
-                player_y_change -= player_speed
-            if keys[pygame.K_DOWN]:
-                player_y_change += player_speed
-            if keys[pygame.K_SPACE] and bullet_visible == False and defeat == False:
-                sonido_bala = mixer.Sound('audio/disparo.mp3')
-                sonido_bala.play()
-                bullet_x = player_x
-                bullet_y = player_y
-                shooting_bullet(bullet_x, bullet_y)
-            if event.key == pygame.K_ESCAPE:
-                pygame.quit()
-            if event.key == pygame.K_m:
-                mixer.music.pause()
-            if event.key == pygame.K_p:
-                mixer.music.play()
-
-        # Event of releasing keys
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                player_x_change = 0
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                player_y_change = 0
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                player_x_change = 0
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                player_y_change = 0
-
-    # Change players location
-    player_x += player_x_change
-    player_y += player_y_change
-    # Keep the player on the screen's borders
-    if player_x <= 0:
-        player_x = 0
-    elif player_x >= 736:
-        player_x = 736
-    if player_y <= 0:
-        player_y = 0
-    elif player_y >= 536:
-        player_y = 536
-
-    # Changes enemies location
+ 
+    keys = pygame.key.get_pressed()
+    # Moving controls
+    if keys[pygame.K_LEFT] and player_x - player_speed > 0:
+        player_x -= player_speed
+    if keys[pygame.K_RIGHT] and player_x - player_speed< 736:
+        player_x += player_speed
+    if keys[pygame.K_UP] and player_y - player_speed > 0:
+        player_y -= player_speed
+    if keys[pygame.K_DOWN] and player_y + player_speed < 530:
+        player_y += player_speed
+    # Shooting
+    if keys[pygame.K_SPACE] and bullet_visible == False and defeat == False:
+        sonido_bala = mixer.Sound('audio/disparo.mp3')
+        sonido_bala.play()
+        bullet_x = player_x
+        bullet_y = player_y
+        shooting_bullet(bullet_x, bullet_y)
+    # Other controls
+    if keys[pygame.K_ESCAPE]:
+        pygame.quit()
+    if keys[pygame.K_m]:
+        mixer.music.pause()
+    if keys[pygame.K_p]:
+        mixer.music.play()
     for e in range(number_enemies):
-        #if enemigo_y[e] > 500 and int(enemigo_x[e]) == jugador_x_cambio:
-            #for k in range(cantidad_enemigos):
-            #    enemigo_y[k] = 1000
         enemy_x[e] += enemy_x_change[e]
-
-        # Keep the enemies on the screen's borders
         if enemy_x[e]<= 0:
             enemy_x_change[e] += enemy_speed
             enemy_y[e] += enemy_y_change[e]
@@ -186,7 +155,7 @@ while game_runing:
             enemy_x_change[e] -= enemy_speed
             enemy_y[e] += enemy_y_change[e]
 
-    #Colision
+        #Colision
         colision_enemy_and_bullet = colision(enemy_x[e], enemy_y[e], bullet_x, bullet_y)
         if colision_enemy_and_bullet == True:
             sound_colision = mixer.Sound('audio/golpe.mp3')
