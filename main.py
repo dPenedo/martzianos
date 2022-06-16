@@ -26,16 +26,12 @@ def show_start():
     screen.blit(texto2, (280, 280))
 
 
-
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
 font = pygame.font.Font('ka1.ttf', 30)
-text_surf = font.render('press  Space  to  start', True, (237, 235, 220))    
-show_text = True
 def press_space():
     text = font.render('press Space to start', True, (237, 235, 220))
     screen.blit(text, (160,450))
-
 
 
 
@@ -90,7 +86,7 @@ def final_text():
 # Function showing score
 score_font = pygame.font.Font('ka1.ttf', 36)
 def show_score():
-    text = score_font.render(f'Puntaje: {score}', True, (237, 235, 220))
+    text = score_font.render(f'Score: {score}', True, (237, 235, 220))
     screen.blit(text, (15, 20))
 
 # Function player
@@ -140,43 +136,7 @@ while game_runing:
     clock.tick(FPS)
     # Background image
     screen.blit(background, (0, 0))
-    if not gameStart:
-        show_start()
-        press_space()
-    if gameStart == True:
-        show_score()
-        for e in range(number_enemies):
-            enemy_x[e] += enemy_x_change[e]
-            if enemy_x[e]<= 0:
-                enemy_x_change[e] += enemy_speed
-                enemy_y[e] += enemy_y_change[e]
-            elif enemy_x[e] >= 736:
-                enemy_x_change[e] -= enemy_speed
-                enemy_y[e] += e#Colision
-            colision_enemy_and_bullet = colision(enemy_x[e], enemy_y[e], bullet_x, bullet_y)
-            if colision_enemy_and_bullet == True:
-                sound_colision = mixer.Sound('audio/golpe.mp3')
-                sound_colision.play()
-                bullet_y = 500
-                bullet_visible = False
-                score +=1
-                enemy_x[e]  = random.randint(0, 736)
-                enemy_y[e]  = random.randint(50, 200)
-        
-            player_y_area = player_y - 30
-            final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area)
-            if final_colision:
-                final_sound = mixer.Sound('audio/explosion_final.mp3')
-                final_sound.play(0)
-                pygame.mixer.music.stop()
-                for k in range(number_enemies):
-                    enemy_y[k] = 1000
-                defeat = Truenemy_y_change[e]
-            
-                enemy(enemy_x[e], enemy_y[e], e)
     player(player_x, player_y)
-
-    # Iterate events
     for event in pygame.event.get():
         # Event for quiting
         if event.type == pygame.QUIT:
@@ -208,6 +168,45 @@ while game_runing:
         mixer.music.pause()
     if keys[pygame.K_p]:
         mixer.music.play()
+    if not gameStart:
+        show_start()
+        press_space()
+    if gameStart == True:
+        show_score()
+        for e in range(number_enemies):
+            enemy_x[e] += enemy_x_change[e]
+            if enemy_x[e]<= 0:
+                enemy_x_change[e] += enemy_speed
+                enemy_y[e] += enemy_y_change[e]
+            elif enemy_x[e] >= 736:
+                enemy_x_change[e] -= enemy_speed
+                enemy_y[e] += e
+            
+            #Colision
+            colision_enemy_and_bullet = colision(enemy_x[e], enemy_y[e], bullet_x, bullet_y)
+            if colision_enemy_and_bullet == True:
+                sound_colision = mixer.Sound('audio/golpe.mp3')
+                sound_colision.play()
+                bullet_y = 500
+                bullet_visible = False
+                score +=1
+                enemy_x[e]  = random.randint(0, 736)
+                enemy_y[e]  = random.randint(50, 200)
+            enemy(enemy_x[e], enemy_y[e], e)
+
+            player_y_area = player_y - 30
+            final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area)
+            
+            if final_colision:
+                final_sound = mixer.Sound('audio/explosion_final.mp3')
+                final_sound.play(0)
+                pygame.mixer.music.stop()
+                defeat = True
+                for k in range(number_enemies):
+                    enemy_y[k] = 1000
+                
+
+    # Iterate events
 
         
 
