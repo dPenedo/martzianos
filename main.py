@@ -37,7 +37,6 @@ def press_space():
 
 
 
-
 # Adds Music
 def music_on():
     mixer.music.load('audio/fondo.mp3')
@@ -144,17 +143,18 @@ while game_runing:
  
     keys = pygame.key.get_pressed()
     # Moving controls
-    if keys[pygame.K_LEFT] and player_x - player_speed > 0:
+    if keys[pygame.K_LEFT] and player_x - player_speed > 0 and gameStart == True:
         player_x -= player_speed
-    if keys[pygame.K_RIGHT] and player_x - player_speed< 736:
+    if keys[pygame.K_RIGHT] and player_x - player_speed< 736 and gameStart == True:
         player_x += player_speed
-    if keys[pygame.K_UP] and player_y - player_speed > 0:
+    if keys[pygame.K_UP] and player_y - player_speed > 0 and gameStart == True:
         player_y -= player_speed
-    if keys[pygame.K_DOWN] and player_y + player_speed < 530:
+    if keys[pygame.K_DOWN] and player_y + player_speed < 530 and gameStart == True:
         player_y += player_speed
-    # Shooting
-    if keys[pygame.K_SPACE]:
+    # Starting
+    if keys[pygame.K_SPACE] and gameStart == False:
         gameStart = True
+    #Shoot
     if keys[pygame.K_SPACE] and bullet_visible == False and defeat == False:
         sonido_bala = mixer.Sound('audio/disparo.mp3')
         sonido_bala.play()
@@ -202,8 +202,18 @@ while game_runing:
                 final_sound.play(0)
                 pygame.mixer.music.stop()
                 defeat = True
-                for k in range(number_enemies):
-                    enemy_y[k] = 1000
+    # Restarting
+    if keys[pygame.K_SPACE] and defeat == True:
+        defeat = False
+        show_score()
+        score = 0
+        gameStart = True
+        player_x = 368
+        player_y = 500
+        pygame.mixer.music.play()
+        for k in range(number_enemies):
+            enemy_y[k] -= random.randint(850, 940)
+
                 
 
     # Iterate events
@@ -222,8 +232,11 @@ while game_runing:
     # Defeat
     if defeat == True:
         final_text()
+        press_space()
         smoke(player_x, player_y)
         bullet_y = -1000
-
+        for k in range(number_enemies):
+            enemy_y[k] = 1000
+    print (enemy_y[0]) 
     # Update
     pygame.display.update()
