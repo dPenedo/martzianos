@@ -34,22 +34,19 @@ def press_space():
     screen.blit(text, (160,450))
 
 
-
-
-
 # Adds Music
 def music_on():
     mixer.music.load('audio/fondo.mp3')
     mixer.music.set_volume(0.6)
     mixer.music.play()
 
+# Score
 score = 0
 #  Variables Player
 img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
 player_y = 500
 player_speed = 3
-# Score
 
 
 #  Variables enemy
@@ -58,7 +55,7 @@ enemy_x = []
 enemy_y =[]
 enemy_x_change = []
 enemy_y_change = []
-enemy_speed = 2
+enemy_speed = 2.5
 number_enemies = 8
 
 
@@ -135,11 +132,11 @@ while game_runing:
     clock.tick(FPS)
     # Background image
     screen.blit(background, (0, 0))
-    player(player_x, player_y)
     for event in pygame.event.get():
         # Event for quiting
         if event.type == pygame.QUIT:
             game_runing = False
+    player(player_x, player_y)
  
     keys = pygame.key.get_pressed()
     # Moving controls
@@ -156,8 +153,8 @@ while game_runing:
         gameStart = True
     #Shoot
     if keys[pygame.K_SPACE] and bullet_visible == False and defeat == False:
-        sonido_bala = mixer.Sound('audio/disparo.mp3')
-        sonido_bala.play()
+        bullet_sound = mixer.Sound('audio/disparo.mp3')
+        bullet_sound.play()
         bullet_x = player_x
         bullet_y = player_y
         shooting_bullet(bullet_x, bullet_y)
@@ -177,10 +174,10 @@ while game_runing:
             enemy_x[e] += enemy_x_change[e]
             if enemy_x[e]<= 0:
                 enemy_x_change[e] += enemy_speed
-                enemy_y[e] += enemy_y_change[e]
+                enemy_y[e] += random.randint(10,30)
             elif enemy_x[e] >= 736:
                 enemy_x_change[e] -= enemy_speed
-                enemy_y[e] += e
+                enemy_y[e] += random.randint(10, 30)
             
             #Colision
             colision_enemy_and_bullet = colision(enemy_x[e], enemy_y[e], bullet_x, bullet_y)
@@ -229,14 +226,5 @@ while game_runing:
         bullet_y -= bullet_speed
         
 
-    # Defeat
-    if defeat == True:
-        final_text()
-        press_space()
-        smoke(player_x, player_y)
-        bullet_y = -1000
-        for k in range(number_enemies):
-            enemy_y[k] = 1000
-    print (enemy_y[0]) 
     # Update
     pygame.display.update()
