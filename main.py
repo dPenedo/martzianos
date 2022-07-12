@@ -18,7 +18,7 @@ background = pygame.image.load('img/fondo-espacio.jpg')
 
 # Starting title
 
-starting_font = pygame.font.Font('ka1.ttf', 76)
+starting_font = pygame.font.Font('/fonts/ka1.ttf', 76)
 def show_start():
     texto = starting_font.render('MARTZIANOS', True, (237, 235, 220))
     screen.blit(texto, (75, 180))
@@ -28,7 +28,7 @@ def show_start():
 
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
-font = pygame.font.Font('ka1.ttf', 30)
+font = pygame.font.Font('/fonts/ka1.ttf', 30)
 def press_space():
     text = font.render('press Space to start', True, (237, 235, 220))
     screen.blit(text, (160,450))
@@ -74,13 +74,13 @@ bullet_speed = 5
 bullet_visible = False
 
 # Text of Game Over
-font_final = pygame.font.Font('ka1.ttf', 60)
+font_final = pygame.font.Font('fonts/ka1.ttf', 60)
 def final_text():
     my_font_final = font_final.render('GAME OVER', True, (237, 235, 220))
     screen.blit(my_font_final, (150, 250))
 
 # Function showing score
-score_font = pygame.font.Font('ka1.ttf', 36)
+score_font = pygame.font.Font('fonts/ka1.ttf', 36)
 def show_score():
     text = score_font.render(f'Score: {score}', True, (237, 235, 220))
     screen.blit(text, (15, 20))
