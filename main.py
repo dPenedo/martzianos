@@ -18,7 +18,7 @@ background = pygame.image.load('img/fondo-espacio.jpg')
 
 # Starting title
 
-starting_font = pygame.font.Font('/fonts/ka1.ttf', 76)
+starting_font = pygame.font.Font('fonts/ka1.ttf', 76)
 def show_start():
     texto = starting_font.render('MARTZIANOS', True, (237, 235, 220))
     screen.blit(texto, (75, 180))
@@ -28,7 +28,7 @@ def show_start():
 
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
-font = pygame.font.Font('/fonts/ka1.ttf', 30)
+font = pygame.font.Font('fonts/ka1.ttf', 30)
 def press_space():
     text = font.render('press Space to start', True, (237, 235, 220))
     screen.blit(text, (160,450))
@@ -108,7 +108,7 @@ def shooting_bullet(x, y):
     global bullet_visible
     bullet_visible = True
     screen.blit(img_bala, (x + 16, y + 10))
-# Funcion detectar colisiones
+# Funcion detect colisions
 
 def colision(x_1, y_1, x_2, y_2):
     operation1= math.pow(x_1 - x_2, 2)
@@ -192,13 +192,23 @@ while game_runing:
             enemy(enemy_x[e], enemy_y[e], e)
 
             player_y_area = player_y - 30
+            player_y_area1 = player_y + 20
             final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area)
+            final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area1)
+            
             
             if final_colision:
                 final_sound = mixer.Sound('audio/explosion_final.mp3')
                 final_sound.play(0)
                 pygame.mixer.music.stop()
                 defeat = True
+                for k in range(number_enemies):
+                    enemy_y[k] += random.randint(850, 940)
+    if defeat:
+        final_text()
+        smoke(player_x, player_y)
+        press_space()
+
     # Restarting
     if keys[pygame.K_SPACE] and defeat == True:
         defeat = False
@@ -207,15 +217,14 @@ while game_runing:
         gameStart = True
         player_x = 368
         player_y = 500
+        enemy_x = []
+        enemy_y =[]
         pygame.mixer.music.play()
         for k in range(number_enemies):
-            enemy_y[k] -= random.randint(850, 940)
+            enemy_x.append(random.randint(0, 736))
+            enemy_y.append(random.randint(50, 180))
 
                 
-
-    # Iterate events
-
-        
 
     # Bullet's location
     if bullet_y <= -10:
