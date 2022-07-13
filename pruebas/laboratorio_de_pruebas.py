@@ -18,7 +18,7 @@ fondo = pygame.image.load('img/fondo-espacio.jpg')
 clock = pygame.time.Clock()
 
 
-fuente_inicio = pygame.font.Font('ka1.ttf', 76)
+fuente_inicio = pygame.font.Font('fonts/ka1.ttf', 76)
 def mostrar_inicio():
     texto = fuente_inicio.render('MARTZIANOS', True, (237, 235, 220))
     pantalla.blit(texto, (75, 180))
@@ -26,14 +26,14 @@ def mostrar_inicio():
     pantalla.blit(texto2, (280, 280))
 
 
-fuente = pygame.font.Font('ka1.ttf', 36)
+fuente = pygame.font.Font('fonts/ka1.ttf', 36)
 def mostrar_puntaje(x, y):
     texto = fuente.render('Puntaje:', True, (237, 235, 220))
     pantalla.blit(texto, (x, y))
 
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
-font = pygame.font.Font('ka1.ttf', 30)
+font = pygame.font.Font('fonts/ka1.ttf', 30)
 text_surf = font.render('press  Space  to  start', True, (237, 235, 220))    
 show_text = True
 def press_space():
@@ -42,7 +42,7 @@ def press_space():
 
 
 
-fuente = pygame.font.Font('ka1.ttf', 36)
+fuente = pygame.font.Font('fonts/ka1.ttf', 36)
 def texto_aparece():
     texto = fuente.render('Puntaje:', True, (237, 235, 220))
     pantalla.blit(texto, (x, y))
