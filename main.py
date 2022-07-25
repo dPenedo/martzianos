@@ -25,7 +25,6 @@ def show_start():
     texto2 = starting_font.render('WAR', True, (237, 235, 220))
     screen.blit(texto2, (280, 280))
 
-
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
 font = pygame.font.Font('fonts/ka1.ttf', 30)
@@ -47,7 +46,6 @@ img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
 player_y = 500
 player_speed = 3
-
 
 #  Variables enemy
 img_enemy = []

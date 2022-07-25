@@ -1,6 +1,8 @@
 This is Martizianos War, a space invaders style game project made using Python and Pygame library. It's a work in progress and I'll be upgrading it and adding new features.
 
 
+![Screenshot](./img/screenshot.png)
+
 ## Features
 
  - Use Left Arrow and Right Arrow keys to move Spaceship
