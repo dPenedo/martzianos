@@ -192,10 +192,11 @@ while game_runing:
             player_y_area = player_y - 30
             player_y_area1 = player_y + 20
             final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area)
-            final_colision = colision(enemy_x[e], enemy_y[e], player_x, player_y_area1)
+            final_colision1 = colision(enemy_x[e], enemy_y[e], player_x, player_y_area1)
+            final_colision2 = colision(enemy_x[e], enemy_y[e], player_x, player_y)
             
             
-            if final_colision:
+            if final_colision or final_colision1 or final_colision2:
                 final_sound = mixer.Sound('audio/explosion_final.mp3')
                 final_sound.play(0)
                 pygame.mixer.music.stop()
