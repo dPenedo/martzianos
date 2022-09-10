@@ -3,13 +3,13 @@ import math
 import random
 from pygame import mixer
 
-#Starting Pygame
+# Starting Pygame
 pygame.init()
 
-#Creates the screen
+# Creates the screen
 screen = pygame.display.set_mode((800, 600))
 
-#Title and icon
+# Title and icon
 
 pygame.display.set_caption("Martzianos War")
 icon = pygame.image.load("img/ovni.png")
@@ -19,18 +19,23 @@ background = pygame.image.load('img/fondo-espacio.jpg')
 # Starting title
 
 starting_font = pygame.font.Font('fonts/ka1.ttf', 76)
+
+
 def show_start():
     texto = starting_font.render('MARTZIANOS', True, (237, 235, 220))
     screen.blit(texto, (75, 180))
     texto2 = starting_font.render('WAR', True, (237, 235, 220))
     screen.blit(texto2, (280, 280))
 
+
 font_fade = pygame.USEREVENT + 2
 pygame.time.set_timer(font_fade, 500)
 font = pygame.font.Font('fonts/ka1.ttf', 30)
+
+
 def press_space():
     text = font.render('press Space to start', True, (237, 235, 220))
-    screen.blit(text, (160,450))
+    screen.blit(text, (160, 450))
 
 
 # Adds Music
@@ -40,7 +45,10 @@ def music_on():
     mixer.music.play()
 
 # Score
+
+
 score = 0
+
 #  Variables Player
 img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
@@ -50,7 +58,7 @@ player_speed = 3
 #  Variables enemy
 img_enemy = []
 enemy_x = []
-enemy_y =[]
+enemy_y = []
 enemy_x_change = []
 enemy_y_change = []
 enemy_speed = 2.5
@@ -73,17 +81,25 @@ bullet_visible = False
 
 # Text of Game Over
 font_final = pygame.font.Font('fonts/ka1.ttf', 60)
+
+
 def final_text():
     my_font_final = font_final.render('GAME OVER', True, (237, 235, 220))
     screen.blit(my_font_final, (150, 250))
 
 # Function showing score
+
+
 score_font = pygame.font.Font('fonts/ka1.ttf', 36)
+
+
 def show_score():
     text = score_font.render(f'Score: {score}', True, (237, 235, 220))
     screen.blit(text, (15, 20))
 
 # Function player
+
+
 def player(x, y):
     screen.blit(img_player, (x, y))
 
@@ -91,26 +107,33 @@ def player(x, y):
 # Broken spaceship on the end
 img_smoke = pygame.image.load("img/humo.png")
 img_explosion = pygame.image.load("img/explosion.png")
+
+
 def smoke(x, y):
     screen.blit(img_smoke, (x + 20, y - 30))
-    screen.blit(img_explosion, (x , y - 20))
-    screen.blit(img_explosion, (x + 20 , y))
-    screen.blit(img_explosion, (x + 10 , y + 20))
+    screen.blit(img_explosion, (x, y - 20))
+    screen.blit(img_explosion, (x + 20, y))
+    screen.blit(img_explosion, (x + 10, y + 20))
 
 # Enemy function
+
+
 def enemy(x, y, ene):
     screen.blit(img_enemy[ene], (x, y))
 
 # Function for shooting bullets
+
+
 def shooting_bullet(x, y):
     global bullet_visible
     bullet_visible = True
     screen.blit(img_bala, (x + 16, y + 10))
 # Funcion detect colisions
 
+
 def colision(x_1, y_1, x_2, y_2):
-    operation1= math.pow(x_1 - x_2, 2)
-    operation2= math.pow(y_2 - y_1, 2)
+    operation1 = math.pow(x_1 - x_2, 2)
+    operation2 = math.pow(y_2 - y_1, 2)
     distance = math.sqrt(operation1 + operation2)
     if distance < 27:
         return True
@@ -120,9 +143,12 @@ def colision(x_1, y_1, x_2, y_2):
 
 music_on()
 
-FPS=60
+FPS = 60
 clock = pygame.time.Clock()
-#Loop of the game
+
+# Loop of the game
+
+
 game_runing = True
 defeat = False
 gameStart = False
@@ -138,19 +164,21 @@ while game_runing:
  
     keys = pygame.key.get_pressed()
     # Moving controls
-    if keys[pygame.K_LEFT] and player_x - player_speed > 0 and gameStart == True:
+    if keys[pygame.K_LEFT] and player_x - player_speed > 0 and gameStart is True:
         player_x -= player_speed
-    if keys[pygame.K_RIGHT] and player_x - player_speed< 736 and gameStart == True:
+    if keys[pygame.K_RIGHT] and player_x - player_speed < 736 and gameStart is True:
         player_x += player_speed
-    if keys[pygame.K_UP] and player_y - player_speed > 0 and gameStart == True:
+    if keys[pygame.K_UP] and player_y - player_speed > 0 and gameStart is True:
         player_y -= player_speed
-    if keys[pygame.K_DOWN] and player_y + player_speed < 530 and gameStart == True:
+    if keys[pygame.K_DOWN] and player_y + player_speed < 530 and gameStart is True:
         player_y += player_speed
     # Starting
-    if keys[pygame.K_SPACE] and gameStart == False:
+    if keys[pygame.K_SPACE] and gameStart is False:
         gameStart = True
-    #Shoot
-    if keys[pygame.K_SPACE] and bullet_visible == False and defeat == False:
+    
+    # Shoot
+
+    if keys[pygame.K_SPACE] and bullet_visible is False and defeat is False:
         bullet_sound = mixer.Sound('audio/disparo.mp3')
         bullet_sound.play()
         bullet_x = player_x
@@ -166,7 +194,7 @@ while game_runing:
     if not gameStart:
         show_start()
         press_space()
-    if gameStart == True:
+    if gameStart is True:
         show_score()
         for e in range(number_enemies):
             enemy_x[e] += enemy_x_change[e]
