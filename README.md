@@ -21,13 +21,26 @@ This is Martizianos War, a space invaders-style game project made using Python a
 ## Usage
 
 Open a terminal and navigate to the directory called 'Martzianos' which contains all project files.
+Enter this command to install dependencies: 
+``` bash
+pip install -r requirements
+```
 
 Enter this command to run the application:
-```
-python3 main.py
-```
-or, in case you are still using python 2, enter this command:
-
-```
+``` bash
 python main.py
 ```
+
+## Customization
+You have the flexibility to customize various aspects of the game by adjusting the constants located at the beginning of the code. These constants include:
+
+```python
+# Constants
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+PLAYER_SPEED = 3
+ENEMY_SPEED = 2.5
+NUMBER_ENEMIES = 8
+FPS = 60
+```
+Feel free to experiment with these values to customize the gameplay experience according to your preferences. Modify the player's speed, the number of enemies, screen dimensions, and other parameters to create a game that suits your vision.
+

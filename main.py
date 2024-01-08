@@ -3,22 +3,35 @@ import math
 import random
 from pygame import mixer
 
+
+
+# Constants
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+PLAYER_SPEED = 3
+ENEMY_SPEED = 2.5
+NUMBER_ENEMIES = 8
+FPS = 60
+
+
 # Starting Pygame
 pygame.init()
 
 # Creates the screen
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Martzianos War")
+
 
 # Title and icon
 
-pygame.display.set_caption("Martzianos War")
 icon = pygame.image.load("img/ovni.png")
 pygame.display.set_icon(icon)
 background = pygame.image.load('img/fondo-espacio.jpg')
 
-# Starting title
-
+# Fonts
 starting_font = pygame.font.Font('fonts/ka1.ttf', 76)
+font_fade = pygame.USEREVENT + 2
+pygame.time.set_timer(font_fade, 500)
+font = pygame.font.Font('fonts/ka1.ttf', 30)
 
 
 def show_start():
@@ -28,9 +41,6 @@ def show_start():
     screen.blit(texto2, (280, 280))
 
 
-font_fade = pygame.USEREVENT + 2
-pygame.time.set_timer(font_fade, 500)
-font = pygame.font.Font('fonts/ka1.ttf', 30)
 
 
 def press_space():
@@ -53,7 +63,6 @@ score = 0
 img_player = pygame.image.load("img/cohete-espacial.png")
 player_x = 368
 player_y = 500
-player_speed = 3
 
 #  Variables enemy
 img_enemy = []
@@ -61,15 +70,13 @@ enemy_x = []
 enemy_y = []
 enemy_x_change = []
 enemy_y_change = []
-enemy_speed = 2.5
-number_enemies = 8
 
 
-for e in range(number_enemies):
+for e in range(NUMBER_ENEMIES):
     img_enemy.append(pygame.image.load("img/ufo.png"))
     enemy_x.append(random.randint(0, 736))
     enemy_y.append(random.randint(50, 180))
-    enemy_x_change.append(enemy_speed)
+    enemy_x_change.append(ENEMY_SPEED)
     enemy_y_change.append(70)
 #  Variables of the bullet
 img_bala = pygame.image.load("img/bullet.png")
@@ -143,7 +150,6 @@ def colision(x_1, y_1, x_2, y_2):
 
 music_on()
 
-FPS = 60
 clock = pygame.time.Clock()
 
 # Loop of the game
@@ -164,14 +170,14 @@ while game_runing:
  
     keys = pygame.key.get_pressed()
     # Moving controls
-    if keys[pygame.K_LEFT] and player_x - player_speed > 0 and gameStart is True:
-        player_x -= player_speed
-    if keys[pygame.K_RIGHT] and player_x - player_speed < 736 and gameStart is True:
-        player_x += player_speed
-    if keys[pygame.K_UP] and player_y - player_speed > 0 and gameStart is True:
-        player_y -= player_speed
-    if keys[pygame.K_DOWN] and player_y + player_speed < 530 and gameStart is True:
-        player_y += player_speed
+    if keys[pygame.K_LEFT] and player_x - PLAYER_SPEED > 0 and gameStart is True:
+        player_x -= PLAYER_SPEED
+    if keys[pygame.K_RIGHT] and player_x - PLAYER_SPEED < 736 and gameStart is True:
+        player_x += PLAYER_SPEED
+    if keys[pygame.K_UP] and player_y - PLAYER_SPEED > 0 and gameStart is True:
+        player_y -= PLAYER_SPEED
+    if keys[pygame.K_DOWN] and player_y + PLAYER_SPEED < 530 and gameStart is True:
+        player_y += PLAYER_SPEED
     # Starting
     if keys[pygame.K_SPACE] and gameStart is False:
         gameStart = True
@@ -196,13 +202,13 @@ while game_runing:
         press_space()
     if gameStart is True:
         show_score()
-        for e in range(number_enemies):
+        for e in range(NUMBER_ENEMIES):
             enemy_x[e] += enemy_x_change[e]
             if enemy_x[e]<= 0:
-                enemy_x_change[e] += enemy_speed
+                enemy_x_change[e] += ENEMY_SPEED
                 enemy_y[e] += random.randint(10,30)
             elif enemy_x[e] >= 736:
-                enemy_x_change[e] -= enemy_speed
+                enemy_x_change[e] -= ENEMY_SPEED
                 enemy_y[e] += random.randint(10, 30)
             
             #Colision
@@ -229,7 +235,7 @@ while game_runing:
                 final_sound.play(0)
                 pygame.mixer.music.stop()
                 defeat = True
-                for k in range(number_enemies):
+                for k in range(NUMBER_ENEMIES):
                     enemy_y[k] += random.randint(850, 940)
     if defeat:
         final_text()
@@ -247,7 +253,7 @@ while game_runing:
         enemy_x = []
         enemy_y =[]
         pygame.mixer.music.play()
-        for k in range(number_enemies):
+        for k in range(NUMBER_ENEMIES):
             enemy_x.append(random.randint(0, 736))
             enemy_y.append(random.randint(50, 180))
 
